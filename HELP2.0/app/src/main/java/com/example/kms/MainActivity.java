@@ -65,8 +65,11 @@ public class MainActivity extends AppCompatActivity
         SimpleDateFormat sdf = new SimpleDateFormat("EEEE");
         Date d = new Date();
         setTitle("Today Is: " + sdf.format(d));
+    }
 
-
+    public void gotoDaily(View view){
+        Intent intent = new Intent(this, dayOfActivity.class);
+        startActivity(intent);
     }
 
     @Override
