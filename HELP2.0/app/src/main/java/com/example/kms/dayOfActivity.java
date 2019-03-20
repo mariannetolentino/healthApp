@@ -83,20 +83,18 @@ public class dayOfActivity extends AppCompatActivity
         // Handle navigation view item clicks here.
         int id = item.getItemId();
 
-        if (id == R.id.nav_camera) {
+        if (id == R.id.home) {
             Intent main = new Intent(this, MainActivity.class);
             startActivity(main);
             return true;
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
+        } else if (id == R.id.history) {
+            Intent history = new Intent(this, historyActivity.class);
+            startActivity(history);
+            return true;
+        } else if (id == R.id.calories) {
+            Intent calorie = new Intent(this, calorieActivity.class);
+            startActivity(calorie);
+            return true;
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
