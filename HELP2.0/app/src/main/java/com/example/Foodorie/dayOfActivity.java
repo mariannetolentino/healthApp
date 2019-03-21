@@ -36,8 +36,8 @@ public class dayOfActivity extends AppCompatActivity
             @Override
             public void onClick(View view) {
                 //Left this in just in case you wanted it
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                //Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                //        .setAction("Action", null).show();
 
                 // inflate the layout of the popup window
                 LayoutInflater inflater = (LayoutInflater)
