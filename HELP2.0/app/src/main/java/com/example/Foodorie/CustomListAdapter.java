@@ -1,4 +1,4 @@
-package com.example.kms;
+package com.example.Foodorie;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.util.Log;

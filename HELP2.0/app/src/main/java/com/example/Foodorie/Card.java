@@ -1,4 +1,4 @@
-package com.example.kms;
+package com.example.Foodorie;
 
 public class Card {
     private String imgURL;

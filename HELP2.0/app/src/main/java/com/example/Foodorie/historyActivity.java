@@ -1,4 +1,4 @@
-package com.example.kms;
+package com.example.Foodorie;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -13,27 +13,30 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-
-public class MainActivity extends AppCompatActivity
+public class historyActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    private ListView mListView;
+    String[] mobileArray = { "Sample events here", "Cardio", "Ate a cookie", "Slept", "Walked my dog", "Binged watch GOT", "Played video games"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_history);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         Intent menuSelection = getIntent();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.hide();
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                        .setAction("Action", null).show();
+            }
+        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -44,26 +47,10 @@ public class MainActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        ArrayAdapter adapter1 = new ArrayAdapter<String>(this, R.layout.history_list, mobileArray);
 
-        mListView = (ListView) findViewById(R.id.listView);
-        ArrayList<Card> list = new ArrayList<>();
-
-        list.add(new Card("drawable://" + R.drawable.smokey_mountain, "Monday"));
-        list.add(new Card("drawable://" + R.drawable.smokey_mountain, "Tuesday"));
-        list.add(new Card("drawable://" + R.drawable.smokey_mountain, "Wednesday"));
-        list.add(new Card("drawable://" + R.drawable.smokey_mountain, "Thursday"));
-        list.add(new Card("drawable://" + R.drawable.smokey_mountain, "Friday"));
-
-        CustomListAdapter adapter = new CustomListAdapter(this, R.layout.content_main, list);
-        mListView.setAdapter(adapter);
-        SimpleDateFormat sdf = new SimpleDateFormat("EEEE");
-        Date d = new Date();
-        setTitle("Today Is: " + sdf.format(d));
-    }
-
-    public void gotoDaily(View view){
-        Intent intent = new Intent(this, dayOfActivity.class);
-        startActivity(intent);
+        ListView listView1 = (ListView) findViewById(R.id.mobile_list1);
+        listView1.setAdapter(adapter1);
     }
 
     @Override
@@ -83,7 +70,7 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    /*@Override
+    @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
@@ -96,7 +83,7 @@ public class MainActivity extends AppCompatActivity
         }
 
         return super.onOptionsItemSelected(item);
-    }*/
+    }
 
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {

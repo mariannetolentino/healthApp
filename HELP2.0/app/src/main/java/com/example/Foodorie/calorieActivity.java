@@ -1,4 +1,4 @@
-package com.example.kms;
+package com.example.Foodorie;
 
 import android.content.Intent;
 import android.os.Bundle;

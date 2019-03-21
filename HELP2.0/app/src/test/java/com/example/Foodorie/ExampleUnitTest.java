@@ -1,4 +1,4 @@
-package com.example.kms;
+package com.example.Foodorie;
 
 import org.junit.Test;
 
