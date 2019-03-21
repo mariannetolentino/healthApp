@@ -11,19 +11,19 @@
         android:theme="@style/AppTheme">
         <activity
             android:name="com.example.Foodorie.dayOfActivity"
-            android:label="Marianne"
+            android:label="@string/app_bar_title"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name="com.example.Foodorie.historyActivity"
-            android:label="Christian"
+            android:label="@string/app_bar_title"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name="com.example.Foodorie.calorieActivity"
-            android:label="Justin"
+            android:label="@string/app_bar_title"
             android:theme="@style/AppTheme.NoActionBar"></activity>
         <activity
             android:name="com.example.Foodorie.MainActivity"
-            android:label="Jonathan"
+            android:label="@string/app_bar_title"
             android:theme="@style/AppTheme.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
