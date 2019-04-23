@@ -2,23 +2,19 @@ package com.example.Foodorie;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+import android.widget.CalendarView;
 import android.widget.ListView;
 
 public class historyActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-    String[] mobileArray = { "Sample events here", "Cardio", "Ate a cookie", "Slept", "Walked my dog", "Binged watch GOT", "Played video games"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,10 +34,28 @@ public class historyActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        ArrayAdapter adapter1 = new ArrayAdapter<String>(this, R.layout.history_list, mobileArray);
+        String[] dummyArray = {"Today's data placeholder 1", "placeholder 2","placeholder 3","placeholder 4","placeholder 5"};
+
+        ArrayAdapter adapter1 = new ArrayAdapter<String>(historyActivity.this, R.layout.history_list, dummyArray);
 
         ListView listView1 = (ListView) findViewById(R.id.mobile_list1);
         listView1.setAdapter(adapter1);
+
+        CalendarView calView_historyDate;
+        calView_historyDate = (CalendarView) findViewById(R.id.calendarView);
+        calView_historyDate.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
+            @Override
+            public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth)
+            {
+                foodorieData testdummy = new foodorieData();
+                String[] dummyArray = testdummy.getData(year, month, dayOfMonth);
+
+                ArrayAdapter adapter1 = new ArrayAdapter<String>(historyActivity.this, R.layout.history_list, dummyArray);
+
+                ListView listView1 = (ListView) findViewById(R.id.mobile_list1);
+                listView1.setAdapter(adapter1);
+            }
+        });
     }
 
     @Override
