@@ -32,7 +32,6 @@
         app:fabCustomSize="48dp"
         app:fabSize="auto"
         app:maxImageSize="64dp"
-        app:srcCompat="@android:drawable/ic_input_add"
-        app:useCompatPadding="false" />
+        app:srcCompat="@android:drawable/ic_input_add" />
 
 </android.support.design.widget.CoordinatorLayout>

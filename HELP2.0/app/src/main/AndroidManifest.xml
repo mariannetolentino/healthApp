@@ -10,6 +10,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
+            android:name="com.example.Foodorie.addItem"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+
+        <activity
             android:name="com.example.Foodorie.dayOfActivity"
             android:label="@string/app_bar_title"
             android:theme="@style/AppTheme.NoActionBar"></activity>
