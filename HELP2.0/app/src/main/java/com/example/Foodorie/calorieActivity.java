@@ -1,5 +1,6 @@
 package com.example.Foodorie;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -14,8 +15,17 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+
 public class calorieActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    foodorieData myFood = new foodorieData();
+    int year, month, day, totalcalories = 0;
+    ArrayList foodList;
+    String[] separate;
+    String foodcalorie;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,8 +33,6 @@ public class calorieActivity extends AppCompatActivity
         setContentView(R.layout.activity_calorie);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        Intent menuSelection = getIntent();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -34,6 +42,25 @@ public class calorieActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        Context context = getApplicationContext();
+        Calendar todaysDate = Calendar.getInstance();
+        year = todaysDate.get(Calendar.YEAR);
+        month = todaysDate.get(Calendar.MONTH);
+        day = todaysDate.get(Calendar.DAY_OF_MONTH);
+        foodList = myFood.getData(year, month, day, context);
+
+        for(int x = 0; x < foodList.size(); ++x)
+        {
+            if(foodList.get(x).toString() != "")
+            {
+                foodcalorie = foodList.get(x).toString();
+                separate = foodcalorie.split(" ");
+                totalcalories += Integer.parseInt(separate[1]);
+            }
+        }
+
+        //System.out.println(totalcalories);
     }
 
     @Override
@@ -42,7 +69,9 @@ public class calorieActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            Intent main = new Intent(this, MainActivity.class);
+            startActivity(main);
+            finish();
         }
     }
 
@@ -55,14 +84,17 @@ public class calorieActivity extends AppCompatActivity
         if (id == R.id.home) {
             Intent main = new Intent(this, MainActivity.class);
             startActivity(main);
+            finish();
             return true;
         } else if (id == R.id.history) {
             Intent history = new Intent(this, historyActivity.class);
             startActivity(history);
+            finish();
             return true;
         } else if (id == R.id.calories) {
             Intent calorie = new Intent(this, calorieActivity.class);
             startActivity(calorie);
+            finish();
             return true;
         }
 

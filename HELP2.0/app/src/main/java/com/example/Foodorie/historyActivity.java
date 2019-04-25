@@ -1,5 +1,6 @@
 package com.example.Foodorie;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.NavigationView;
@@ -13,8 +14,15 @@ import android.widget.ArrayAdapter;
 import android.widget.CalendarView;
 import android.widget.ListView;
 
+import java.util.ArrayList;
+import java.util.Calendar;
+
 public class historyActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
+    foodorieData myFood = new foodorieData();
+    ArrayList textOutput = new ArrayList();
+    int day, month, year;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,8 +30,6 @@ public class historyActivity extends AppCompatActivity
         setContentView(R.layout.activity_history);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        Intent menuSelection = getIntent();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -34,9 +40,18 @@ public class historyActivity extends AppCompatActivity
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        String[] dummyArray = {"Today's data placeholder 1", "placeholder 2","placeholder 3","placeholder 4","placeholder 5"};
+        Context context = getApplicationContext();
+        Calendar todaysDate = Calendar.getInstance();
+        year = todaysDate.get(Calendar.YEAR);
+        month = todaysDate.get(Calendar.MONTH);
+        day = todaysDate.get(Calendar.DAY_OF_MONTH);
+        textOutput = myFood.getData(year, month, day, context);
+        if(textOutput.get(0).toString() == "")
+        {
+            textOutput.set(0,"No food consumed on this day");
+        }
 
-        ArrayAdapter adapter1 = new ArrayAdapter<String>(historyActivity.this, R.layout.history_list, dummyArray);
+        ArrayAdapter adapter1 = new ArrayAdapter<String>(historyActivity.this, R.layout.history_list, textOutput);
 
         ListView listView1 = (ListView) findViewById(R.id.mobile_list1);
         listView1.setAdapter(adapter1);
@@ -45,12 +60,16 @@ public class historyActivity extends AppCompatActivity
         calView_historyDate = (CalendarView) findViewById(R.id.calendarView);
         calView_historyDate.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
-            public void onSelectedDayChange(CalendarView view, int year, int month, int dayOfMonth)
+            public void onSelectedDayChange(CalendarView view, int year_buff, int month_buff, int day_buff)
             {
-                foodorieData testdummy = new foodorieData();
-                String[] dummyArray = testdummy.getData(year, month, dayOfMonth);
+                Context context = getApplicationContext();
+                textOutput = myFood.getData(year, month, day_buff, context);
+                if(textOutput.get(0).toString() == "")
+                {
+                    textOutput.set(0,"No food consumed on this day");
+                }
 
-                ArrayAdapter adapter1 = new ArrayAdapter<String>(historyActivity.this, R.layout.history_list, dummyArray);
+                ArrayAdapter adapter1 = new ArrayAdapter<String>(historyActivity.this, R.layout.history_list, textOutput);
 
                 ListView listView1 = (ListView) findViewById(R.id.mobile_list1);
                 listView1.setAdapter(adapter1);
@@ -64,7 +83,9 @@ public class historyActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            Intent main = new Intent(this, MainActivity.class);
+            startActivity(main);
+            finish();
         }
     }
 
@@ -76,14 +97,17 @@ public class historyActivity extends AppCompatActivity
         if (id == R.id.home) {
             Intent main = new Intent(this, MainActivity.class);
             startActivity(main);
+            finish();
             return true;
         } else if (id == R.id.history) {
             Intent history = new Intent(this, historyActivity.class);
             startActivity(history);
+            finish();
             return true;
         } else if (id == R.id.calories) {
             Intent calorie = new Intent(this, calorieActivity.class);
             startActivity(calorie);
+            finish();
             return true;
         }
 

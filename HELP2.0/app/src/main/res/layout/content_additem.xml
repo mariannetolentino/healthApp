@@ -17,7 +17,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
         android:ems="10"
-        android:hint="Exaple: 500"
+        android:hint="Example: 500"
         android:inputType="number"
         android:textSize="36sp"
         android:typeface="sans"

@@ -1,5 +1,6 @@
 package com.example.Foodorie;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -18,10 +19,15 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.text.DateFormat;
+import java.util.Calendar;
+
 public class addItem extends AppCompatActivity {
 
+    foodorieData myFood = new foodorieData();
     String foodName;
     int calories;
+    int day, month, year;
 
     EditText itemInput;
     EditText calorieInput;
@@ -30,13 +36,11 @@ public class addItem extends AppCompatActivity {
     Button cancel;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.content_additem);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        Intent menuSelection = getIntent();
 
         itemInput = (EditText) findViewById(R.id.itemInput);
         calorieInput = (EditText) findViewById(R.id.calorieInput);
@@ -46,11 +50,24 @@ public class addItem extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 foodName = itemInput.getText().toString();
-                calories = Integer.valueOf(calorieInput.getText().toString());
-
+                if(!calorieInput.getText().toString().isEmpty() && !foodName.isEmpty())
+                {
+                    Context context = getApplicationContext();
+                    Calendar todaysDate = Calendar.getInstance();
+                    calories = Integer.parseInt(calorieInput.getText().toString());
+                    year = todaysDate.get(Calendar.YEAR);
+                    month = todaysDate.get(Calendar.MONTH);
+                    day = todaysDate.get(Calendar.DAY_OF_MONTH);
+                    myFood.saveData(year, month, day, foodName + " " + calories, context);
+                    Intent intent = new Intent(com.example.Foodorie.addItem.this, dayOfActivity.class);
+                    startActivity(intent);
+                    finish();
+                }
+                else
+                    finish();
             }
         });
-    };
+    }
 
     //for testing
     private void showToast(String text){
@@ -63,7 +80,9 @@ public class addItem extends AppCompatActivity {
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            Intent main = new Intent(this, MainActivity.class);
+            startActivity(main);
+            finish();
         }
     }
 

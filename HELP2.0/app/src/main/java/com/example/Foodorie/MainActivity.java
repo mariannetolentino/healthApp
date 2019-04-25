@@ -20,7 +20,9 @@ import java.util.Date;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
+
     private ListView mListView;
+    foodorieData myFood = new foodorieData();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,8 +30,6 @@ public class MainActivity extends AppCompatActivity
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        Intent menuSelection = getIntent();
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -39,7 +39,6 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
-
 
         mListView = (ListView) findViewById(R.id.listView);
         ArrayList<Card> list = new ArrayList<>();
@@ -60,6 +59,7 @@ public class MainActivity extends AppCompatActivity
     public void gotoDaily(View view){
         Intent intent = new Intent(this, dayOfActivity.class);
         startActivity(intent);
+        finish();
     }
 
     @Override
@@ -68,7 +68,9 @@ public class MainActivity extends AppCompatActivity
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         } else {
-            super.onBackPressed();
+            Intent main = new Intent(this, MainActivity.class);
+            startActivity(main);
+            finish();
         }
     }
 
@@ -80,14 +82,17 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.home) {
             Intent main = new Intent(this, MainActivity.class);
             startActivity(main);
+            finish();
             return true;
         } else if (id == R.id.history) {
             Intent history = new Intent(this, historyActivity.class);
             startActivity(history);
+            finish();
             return true;
         } else if (id == R.id.calories) {
             Intent calorie = new Intent(this, calorieActivity.class);
             startActivity(calorie);
+            finish();
             return true;
         }
 
