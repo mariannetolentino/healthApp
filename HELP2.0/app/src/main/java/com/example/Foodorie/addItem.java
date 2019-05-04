@@ -33,7 +33,6 @@ public class addItem extends AppCompatActivity {
     EditText calorieInput;
 
     Button addItem;
-    Button cancel;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -49,7 +48,7 @@ public class addItem extends AppCompatActivity {
         addItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                foodName = itemInput.getText().toString();
+                foodName = itemInput.getText().toString().replaceAll("\\s", "_");
                 if(!calorieInput.getText().toString().isEmpty() && !foodName.isEmpty())
                 {
                     Context context = getApplicationContext();
@@ -58,7 +57,8 @@ public class addItem extends AppCompatActivity {
                     year = todaysDate.get(Calendar.YEAR);
                     month = todaysDate.get(Calendar.MONTH);
                     day = todaysDate.get(Calendar.DAY_OF_MONTH);
-                    myFood.saveData(year, month, day, foodName + " " + calories, context);
+                    myFood.saveData(year, month, day, String.format("%.9s",foodName) + " " + String.format("%.4s", calories), context);
+
                     Intent intent = new Intent(com.example.Foodorie.addItem.this, dayOfActivity.class);
                     startActivity(intent);
                     finish();
@@ -69,21 +69,11 @@ public class addItem extends AppCompatActivity {
         });
     }
 
-    //for testing
-    private void showToast(String text){
-        Toast.makeText(addItem.this, text, Toast.LENGTH_SHORT).show();
-    }
-
     @Override
     public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            Intent main = new Intent(this, MainActivity.class);
-            startActivity(main);
-            finish();
-        }
+        Intent main = new Intent(this, dayOfActivity.class);
+        startActivity(main);
+        finish();
     }
 
 }

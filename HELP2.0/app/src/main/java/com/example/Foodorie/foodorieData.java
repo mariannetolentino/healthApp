@@ -9,7 +9,6 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
-
 public class foodorieData {
 
     ArrayList textOutput = new ArrayList();
@@ -24,8 +23,7 @@ public class foodorieData {
         File file = new File(pathDir, filename);
 
         textOutput.clear();
-        if(pathDir.exists() && pathDir.isDirectory())
-        {
+        if(pathDir.exists() && pathDir.isDirectory()) {
             try {
                 BufferedReader br = new BufferedReader(new FileReader(file));
                 String line;
@@ -34,13 +32,9 @@ public class foodorieData {
                     textOutput.add(line);
                 }
                 br.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+            } catch (IOException e) { e.printStackTrace(); }
         }
-
-        if(textOutput.isEmpty())
-        {
+        if(textOutput.isEmpty()) {
             textOutput.add("");
         }
 
@@ -57,21 +51,17 @@ public class foodorieData {
         String input = input_buff + "\n";
         String filename = Integer.toString(day_buff) + ".txt";
         File file = new File(pathDir, filename);
-        try
-        {
-            if(pathDir.exists() && pathDir.isDirectory())
-            {
+        try {
+            if(pathDir.exists() && pathDir.isDirectory()) {
                 BufferedReader br = new BufferedReader(new FileReader(file));
                 String line;
 
-                while ((line = br.readLine()) != null)
-                {
+                while ((line = br.readLine()) != null) {
                     text.append(line);
                     text.append("\n");
                 }
                 br.close();
             }
-
             pathDir.mkdirs();
             FileOutputStream filestream = new FileOutputStream(file);
             filestream.write(text.toString().getBytes());

@@ -13,7 +13,6 @@ import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.CalendarView;
 import android.widget.ListView;
-
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -46,13 +45,22 @@ public class historyActivity extends AppCompatActivity
         month = todaysDate.get(Calendar.MONTH);
         day = todaysDate.get(Calendar.DAY_OF_MONTH);
         textOutput = myFood.getData(year, month, day, context);
-        if(textOutput.get(0).toString() == "")
-        {
+        if(textOutput.get(0).toString() == "") {
             textOutput.set(0,"No food consumed on this day");
         }
-
+        else {
+            for(int x = 0; x < textOutput.size(); ++x) {
+                if(textOutput.get(x).toString() != "") {
+                    String[] splitStr = textOutput.get(x).toString().split(" ");
+                    String whitespace = String.format("%-27s", "");
+                    String food = splitStr[0].replaceAll("_", " ") + whitespace.substring(splitStr[0].length()) + "\t";
+                    String calorie = splitStr[1] + "  calories";
+                    String textStr = food + whitespace.substring(calorie.length()) + calorie;
+                    textOutput.set(x, textStr);
+                }
+            }
+        }
         ArrayAdapter adapter1 = new ArrayAdapter<String>(historyActivity.this, R.layout.history_list, textOutput);
-
         ListView listView1 = (ListView) findViewById(R.id.mobile_list1);
         listView1.setAdapter(adapter1);
 
@@ -60,17 +68,23 @@ public class historyActivity extends AppCompatActivity
         calView_historyDate = (CalendarView) findViewById(R.id.calendarView);
         calView_historyDate.setOnDateChangeListener(new CalendarView.OnDateChangeListener() {
             @Override
-            public void onSelectedDayChange(CalendarView view, int year_buff, int month_buff, int day_buff)
-            {
+            public void onSelectedDayChange(CalendarView view, int year_buff, int month_buff, int day_buff) {
                 Context context = getApplicationContext();
-                textOutput = myFood.getData(year, month, day_buff, context);
-                if(textOutput.get(0).toString() == "")
-                {
+                textOutput = myFood.getData(year_buff, month_buff, day_buff, context);
+                for(int x = 0; x < textOutput.size(); ++x) {
+                    if(textOutput.get(x).toString() != "") {
+                        String[] splitStr = textOutput.get(x).toString().split(" ");
+                        String whitespace = String.format("%-27s", "");
+                        String food = splitStr[0].replaceAll("_", " ") + whitespace.substring(splitStr[0].length()) + "\t";
+                        String calorie = splitStr[1] + "  calories";
+                        String textStr = food + whitespace.substring(calorie.length()) + calorie;
+                        textOutput.set(x, textStr);
+                    }
+                }
+                if(textOutput.get(0).toString() == "") {
                     textOutput.set(0,"No food consumed on this day");
                 }
-
                 ArrayAdapter adapter1 = new ArrayAdapter<String>(historyActivity.this, R.layout.history_list, textOutput);
-
                 ListView listView1 = (ListView) findViewById(R.id.mobile_list1);
                 listView1.setAdapter(adapter1);
             }

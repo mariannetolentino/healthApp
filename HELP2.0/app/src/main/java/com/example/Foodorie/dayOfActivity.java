@@ -20,6 +20,7 @@ import android.view.MenuItem;
 import android.widget.CheckBox;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -28,10 +29,8 @@ public class dayOfActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     foodorieData myFood = new foodorieData();
-    private CheckBox chk2, chk3, chk4, chk5, chk6, chk7, chk8;
     int year, month, day;
     ArrayList foodList;
-    String[] separate;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,64 +46,27 @@ public class dayOfActivity extends AppCompatActivity
         day = todaysDate.get(Calendar.DAY_OF_MONTH);
         foodList = myFood.getData(year, month, day, context);
 
-        chk2 = (CheckBox) findViewById(R.id.checkBox2);
-        chk3 = (CheckBox) findViewById(R.id.checkBox3);
-        chk4 = (CheckBox) findViewById(R.id.checkBox4);
-        chk5 = (CheckBox) findViewById(R.id.checkBox5);
-        chk6 = (CheckBox) findViewById(R.id.checkBox6);
-        chk7 = (CheckBox) findViewById(R.id.checkBox7);
-        chk8 = (CheckBox) findViewById(R.id.checkBox8);
 
-        for(int x = 0; x < foodList.size(); ++x)
-        {
-            if(foodList.get(x).toString() != "")
-            {
-                if(chk2.getText() == "")
-                {
-                    chk2.setText(foodList.get(x).toString());
-                    chk2.setChecked(true);
-                    chk2.setVisibility(View.VISIBLE);
-                }
-                else if(chk3.getText() == "")
-                {
-                    chk3.setText(foodList.get(x).toString());
-                    chk3.setChecked(true);
-                    chk3.setVisibility(View.VISIBLE);
-                }
-                else if(chk4.getText() == "")
-                {
-                    chk4.setText(foodList.get(x).toString());
-                    chk4.setChecked(true);
-                    chk4.setVisibility(View.VISIBLE);
-                }
-                else if(chk5.getText() == "")
-                {
-                    chk5.setText(foodList.get(x).toString());
-                    chk5.setChecked(true);
-                    chk5.setVisibility(View.VISIBLE);
-                }
-                else if(chk6.getText() == "")
-                {
-                    chk6.setText(foodList.get(x).toString());
-                    chk6.setChecked(true);
-                    chk6.setVisibility(View.VISIBLE);
-                }
-                else if(chk7.getText() == "")
-                {
-                    chk7.setText(foodList.get(x).toString());
-                    chk7.setChecked(true);
-                    chk7.setVisibility(View.VISIBLE);
-                }
-                else if(chk8.getText() == "")
-                {
-                    chk8.setText(foodList.get(x).toString());
-                    chk8.setChecked(true);
-                    chk8.setVisibility(View.VISIBLE);
-                }
-                else
-                {
-                    break;
-                }
+        TextView[] item = new TextView[8];
+
+        item[0] = (TextView) findViewById(R.id.textView3);
+        item[1] = (TextView) findViewById(R.id.textView4);
+        item[2] = (TextView) findViewById(R.id.textView5);
+        item[3] = (TextView) findViewById(R.id.textView6);
+        item[4] = (TextView) findViewById(R.id.textView7);
+        item[5] = (TextView) findViewById(R.id.textView8);
+        item[6] = (TextView) findViewById(R.id.textView9);
+        item[7] = (TextView) findViewById(R.id.textView10);
+
+        for(int x = 0; x < foodList.size(); ++x) {
+            if(!foodList.get(x).toString().isEmpty()) {
+                String[] splitStr = foodList.get(x).toString().split(" ");
+                String whitespace = String.format("%-13s", "");
+                String food = splitStr[0].replaceAll("_", " ") + whitespace.substring(splitStr[0].length()) + "\t";
+                String calorie = splitStr[1] + " calories";
+                String textStr = food + whitespace.substring(calorie.length()) + calorie;
+                item[x].setVisibility(View.VISIBLE);
+                item[x].setText(textStr);
             }
         }
 
@@ -114,6 +76,7 @@ public class dayOfActivity extends AppCompatActivity
             public void onClick(View view) {
                 Intent addItem = new Intent(dayOfActivity.this, addItem.class);
                 startActivity(addItem);
+                finish();
             }
         });
 
@@ -139,7 +102,6 @@ public class dayOfActivity extends AppCompatActivity
         }
     }
 
-    @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.

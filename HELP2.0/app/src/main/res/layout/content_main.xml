@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:cardview="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="fill_parent"
@@ -26,14 +25,16 @@
                 android:clickable="true"
                 android:onClick="gotoDaily"
                 android:scaleType="centerCrop" />
+
             <TextView
+                android:id="@+id/textView"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:layout_margin="5dp"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="#333333"
-                android:id="@+id/textView"
-                android:layout_gravity="center_horizontal"
-                android:layout_margin="5dp" />
+                cardview:fontFamily="casual" />
         </LinearLayout>
     </android.support.v7.widget.CardView>
 </RelativeLayout>
